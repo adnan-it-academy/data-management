@@ -14,20 +14,43 @@ class Score:
 # Lista rezultata
 scores = []
 
-# TODO: Omogućite unos rezultata za više korisnika
 
-# Sortiranje rezultata
+def unos_rezultata():
+    username = input("Unesite korisničko ime: ")
+    points = int(input("Unesite broj bodova: "))
+    return Score(username, points)
 
-# TODO: Sortirajte listu rezultata po broju bodova (opadajuće)
 
-# Serijalizacija liste rezultata u fajl 'scores.pkl'
+def spremi_rezultate():
+    with open('scores.pkl', 'wb') as file:
+        pickle.dump(scores, file)
 
-# TODO: Serijalizujte listu rezultata i sačuvajte je u fajl
 
-# Deserijalizacija i ispis rang liste
+def ucitaj_rezultate():
+    try:
+        with open('scores.pkl', 'rb') as file:
+            return pickle.load(file)
+    except FileNotFoundError:
+        return []
 
-# TODO: Učitajte rezultate iz fajla i ispišite rang listu
+
+if __name__ == "__main__":
+    
+    scores = ucitaj_rezultate()
+
+    
+    nastavak = 'da'
+    while nastavak.lower() == 'da':
+        rezultat = unos_rezultata()
+        scores.append(rezultat)
+        nastavak = input("Želite li unijeti još rezultata? (da/ne): ")
+
+    
+    scores.sort(key=lambda x: x.points, reverse=True)
+
+    
+    spremi_rezultate()
 
 print("Rang lista:")
-for score in loaded_scores:
+for score in scores:
     print(score)
