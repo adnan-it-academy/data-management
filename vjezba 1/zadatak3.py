@@ -2,19 +2,45 @@
 
 import pickle
 
-# Lista zadataka
+
 tasks = []
 
-# TODO: Učitajte postojeće zadatke iz fajla ako postoji
 
-# Ispis postojećih zadataka
+def ucitaj_zadatke():
+    try:
+        with open('tasks.pkl', 'rb') as file:
+            return pickle.load(file)
+    except FileNotFoundError:
+        return []
 
-# TODO: Ispišite sve postojeće zadatke
+def spremi_zadatke():
+    with open('tasks.pkl', 'wb') as file:
+        pickle.dump(tasks, file)
 
-# Dodavanje novih zadataka
 
-# TODO: Omogućite korisniku da dodaje nove zadatke
+if __name__ == "__main__":
+    
+    tasks = ucitaj_zadatke()
 
-# Serijalizacija i čuvanje zadataka u fajl 'tasks.pkl'
+    
+    if tasks:
+        print("Postojeći zadaci:")
+        for task in tasks:
+            print(f"- {task}")
+    else:
+        print("Nema postojećih zadataka.")
 
-# TODO: Serijalizujte listu zadataka i sačuvajte je u fajl
+    
+    while True:
+        task = input("Unesite novi zadatak (ili 'kraj' za izlaz): ")
+        if task.lower() == 'kraj':
+            break
+        tasks.append(task)
+
+    
+    spremi_zadatke()
+
+    
+    print("Svi zadaci:")
+    for task in tasks:
+        print(f"- {task}")
