@@ -17,14 +17,19 @@ users = []
 
 # TODO: Omogućite unos podataka o korisnicima i dodajte ih u listu
 
+while input("Unos jos jednog korisnika : (Y/N)") == "Y" :
+    users.append(User(input("Unesite korisnicko ime : "), input("Unesite mejl : "), int(input("Unesite godine : "))))
 # Serijalizacija liste korisnika u fajl 'users.pkl'
-
+fajl = open("users.pkl", "w")
 # TODO: Serijalizujte listu korisnika i sačuvajte u fajl
-
+serijalizovana_lista = pickle.dumps(users)
+fajl.write(f"{pickle.dumps(users)}")
 # Deserijalizacija i ispis korisnika
+users = pickle.loads(serijalizovana_lista)
+
 
 # TODO: Učitajte korisnike iz fajla i ispišite ih
 
 print("Spremljeni korisnici:")
-for user in loaded_users:
+for user in users:
     print(user)
